@@ -15,7 +15,7 @@ const CardBox = ({ children, className }: MyAppProps) => {
   const { boxed } = useContext(CustomizerContext);
   return (
     <Card
-      className={`${className} mb-[1.875rem] ${
+      className={`${className} mb-[0.2625rem] ${
         boxed ? "rounded-md" : ""
       } glass-card`}
     >
