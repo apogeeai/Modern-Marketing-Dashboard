@@ -1,10 +1,7 @@
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    reactStrictMode: false,
-    experimental: {
-        hostname: '0.0.0.0',
-    }
+    reactStrictMode: false
 };
 
 export default nextConfig;
