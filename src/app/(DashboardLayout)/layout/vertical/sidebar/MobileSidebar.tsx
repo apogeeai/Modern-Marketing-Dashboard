@@ -1,62 +1,107 @@
 "use client";
-import React, { useContext } from "react";
-import { Sidebar } from "flowbite-react";
-import SidebarContent from "./Sidebaritems";
-import NavItems from "./NavItems";
-import NavCollapse from "./NavCollapse";
-import { CustomizerContext } from "@/app/context/customizerContext";
-import SimpleBar from "simplebar-react";
-import FullLogo from "../../shared/logo/FullLogo";
+import React from "react";
 import { Icon } from "@iconify/react";
-const MobileSidebar = () => {
-  const { selectedIconId, setSelectedIconId } = useContext(CustomizerContext) || {};
-  const selectedContent = SidebarContent.find(
-    (data) => data.id === selectedIconId
-  );
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import FullLogo from "../../shared/logo/FullLogo";
+
+interface MobileSidebarProps {
+  onClose: () => void;
+}
+
+const MobileSidebar = ({ onClose }: MobileSidebarProps) => {
+  const pathname = usePathname();
+
+  const menuItems = [
+    {
+      title: "Dashboards",
+      items: [
+        {
+          title: "eCommerce",
+          href: "/dashboards/ecommerce",
+          icon: "solar:shop-line-duotone",
+        },
+        {
+          title: "Analytics",
+          href: "/dashboards/analytics",
+          icon: "solar:chart-line-duotone",
+        },
+        {
+          title: "CRM",
+          href: "/dashboards/crm",
+          icon: "solar:users-group-rounded-line-duotone",
+        },
+        {
+          title: "Predictive Analytics",
+          href: "/dashboards/analytics/predictive-analytics",
+          icon: "solar:chart-2-line-duotone",
+        },
+      ],
+    },
+    {
+      title: "Settings (FPO)",
+      items: [
+        {
+          title: "FAQ",
+          href: "/settings/faq",
+          icon: "solar:question-circle-line-duotone",
+        },
+        {
+          title: "Account Settings",
+          href: "/settings/account",
+          icon: "solar:settings-line-duotone",
+        },
+        {
+          title: "Log Out",
+          href: "/auth/login",
+          icon: "solar:logout-2-line-duotone",
+        },
+      ],
+    },
+  ];
+
   return (
-    <>
-     <div className="flex">
-          <Sidebar
-            className="fixed menu-sidebar pt-6 bg-white dark:bg-darkgray z-[10]"
-            aria-label="Sidebar with multi-level dropdown example"
-          >
-            <div className="mb-7 px-4 brand-logo">
-              <FullLogo />
+    <div className="h-full px-3 py-4 overflow-y-auto bg-white dark:bg-gray-800">
+      <div className="flex items-center justify-between mb-5">
+        <FullLogo />
+        <button
+          onClick={onClose}
+          className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+        >
+          <Icon icon="solar:close-circle-line-duotone" className="w-6 h-6" />
+        </button>
+      </div>
+      <ul className="space-y-2 font-medium">
+        {menuItems.map((section, index) => (
+          <li key={index}>
+            <div className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
+              {section.title}
             </div>
-
-            <SimpleBar className="h-[calc(100vh_-_85px)]">
-              <Sidebar.Items className="px-4">
-                <Sidebar.ItemGroup className="sidebar-nav">
-                  {SidebarContent.map((item, index) => (
-                    <React.Fragment key={index}>
-                      <h5 className="text-link font-semibold text-sm caption">
-                        <span className="hide-menu">{item.heading}</span>
-                      </h5>
-                      <Icon
-                        icon="solar:menu-dots-bold"
-                        className="text-ld block mx-auto mt-6 leading-6 dark:text-opacity-60 hide-icon"
-                        height={18}
-                      />
-
-                      {item.children?.map((child, index) => (
-                        <React.Fragment key={child.id && index}>
-                          {child.children ? (
-                            <div className="collpase-items">
-                              <NavCollapse item={child} />
-                            </div>
-                          ) : (
-                            <NavItems item={child} />
-                          )}
-                        </React.Fragment>
-                      ))}
-                    </React.Fragment>
-                  ))}
-                </Sidebar.ItemGroup>
-              </Sidebar.Items>
-            </SimpleBar>
-          </Sidebar>
-        </div>
-    </>
+            <ul className="space-y-1">
+              {section.items.map((item, itemIndex) => (
+                <li key={itemIndex}>
+                  <Link
+                    href={item.href}
+                    className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group ${
+                      pathname === item.href
+                        ? "bg-gray-100 dark:bg-gray-700"
+                        : ""
+                    }`}
+                    onClick={onClose}
+                  >
+                    <Icon
+                      icon={item.icon}
+                      className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                    />
+                    <span className="ml-3">{item.title}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 };
 

@@ -1,99 +1,68 @@
 "use client";
 
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { Sidebar } from "flowbite-react";
 import SidebarContent from "./Sidebaritems";
-import NavItems from "./NavItems";
-import NavCollapse from "./NavCollapse";
-import SimpleBar from "simplebar-react";
-import FullLogo from "../../shared/logo/FullLogo";
 import { Icon } from "@iconify/react";
 import { CustomizerContext } from "@/app/context/customizerContext";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
+import FullLogo from "../../shared/logo/FullLogo";
 
+interface SidebarLayoutProps {
+  onClose?: () => void;
+}
 
-const SidebarLayout = () => {
-
-  const { selectedIconId, setSelectedIconId } =
-    useContext(CustomizerContext) || {};
-  const selectedContent = SidebarContent.find(
-    (data) => data.id === selectedIconId
-  );
-
+const SidebarLayout = ({ onClose }: SidebarLayoutProps) => {
+  const { isCollapse } = useContext(CustomizerContext) || {};
   const pathname = usePathname();
 
-  function findActiveUrl(narray: any, targetUrl: any) {
-    for (const item of narray) {
-      // Check if the `items` array exists in the top-level object
-      if (item.items) {
-        // Iterate through each item in the `items` array
-        for (const section of item.items) {
-          // Check if `children` array exists and search through it
-          if (section.children) {
-            for (const child of section.children) {
-              if (child.url === targetUrl) {
-                return item.id; // Return the ID of the first-level object
-              }
-            }
-          }
-        }
-      }
-    }
-    return null; // URL not found
-  }
-
-  const result = findActiveUrl(SidebarContent, pathname);
-
-  useEffect(() => {
-    setSelectedIconId(result);
-  }, []);
+  const isActive = (href: string) => {
+    return pathname === href;
+  };
 
   return (
-    <>
-      <div className="xl:block hidden">
-        <div className="flex">
-          <Sidebar
-            className="fixed menu-sidebar pt-6 bg-white dark:bg-darkgray z-[10]"
-            aria-label="Sidebar with multi-level dropdown example"
-          >
-            <div className="mb-7 px-4 brand-logo">
-              <FullLogo />
-            </div>
-
-            <SimpleBar className="h-[calc(100vh_-_85px)]">
-              <Sidebar.Items className="px-4">
-                <Sidebar.ItemGroup className="sidebar-nav">
-                  {SidebarContent.map((item, index) => (
-                    <React.Fragment key={index}>
-                      <h5 className="text-link font-semibold text-sm caption">
-                        <span className="hide-menu">{item.heading}</span>
-                      </h5>
-                      <Icon
-                        icon="solar:menu-dots-bold"
-                        className="text-ld block mx-auto mt-6 leading-6 dark:text-opacity-60 hide-icon"
-                        height={18}
-                      />
-
-                      {item.children?.map((child, index) => (
-                        <React.Fragment key={child.id && index}>
-                          {child.children ? (
-                            <div className="collpase-items">
-                              <NavCollapse item={child} />
-                            </div>
-                          ) : (
-                            <NavItems item={child} />
-                          )}
-                        </React.Fragment>
-                      ))}
-                    </React.Fragment>
+    <Sidebar
+      className={`fixed menu-sidebar pt-6 bg-white dark:bg-darkgray z-[10] ${
+        isCollapse === "mini-sidebar" ? "w-[70px]" : "w-[280px]"
+      }`}
+      aria-label="Sidebar with multi-level dropdown example"
+    >
+      <div className="mb-7 px-4 brand-logo">
+        <FullLogo />
+      </div>
+      <div className="flex h-full flex-col justify-between py-2">
+        <div>
+          {SidebarContent.map((item) => (
+            <div key={item.id} className="px-3 py-2">
+              <div className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-500 dark:text-gray-400">
+                <Icon icon={item.icon} className="text-xl" />
+                {isCollapse !== "mini-sidebar" && <span>{item.title}</span>}
+              </div>
+              {item.children && (
+                <div className="mt-1 space-y-1">
+                  {item.children.map((child) => (
+                    <Link
+                      key={child.id}
+                      href={child.href}
+                      onClick={onClose}
+                      className={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+                        isActive(child.href)
+                          ? "bg-primary text-white"
+                          : "text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
+                      }`}
+                    >
+                      <Icon icon={child.icon} className="text-xl" />
+                      {isCollapse !== "mini-sidebar" && <span>{child.title}</span>}
+                    </Link>
                   ))}
-                </Sidebar.ItemGroup>
-              </Sidebar.Items>
-            </SimpleBar>
-          </Sidebar>
+                </div>
+              )}
+            </div>
+          ))}
         </div>
       </div>
-    </>
+    </Sidebar>
   );
 };
 

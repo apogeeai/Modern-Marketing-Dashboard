@@ -1,91 +1,64 @@
+"use client";
+import React, { useState } from "react";
+import { Dropdown } from "flowbite-react";
 import { Icon } from "@iconify/react";
-import { Button, Dropdown } from "flowbite-react";
-import React from "react";
-import * as profileData from "./Data";
-import Link from "next/link";
-import Image from "next/image";
-import SimpleBar from "simplebar-react";
+import { useRouter } from "next/navigation";
+
 const Profile = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
+
+  const handleLogout = () => {
+    // Add logout logic here
+    router.push("/auth/login");
+  };
+
   return (
-    <div className="relative group/menu">
-      <Dropdown
-        label=""
-        className="w-screen sm:w-[360px] py-6  rounded-sm"
-        dismissOnClick={false}
-        renderTrigger={() => (
-          <span className="h-10 w-10 hover:text-primary hover:bg-lightprimary rounded-full flex justify-center items-center cursor-pointer group-hover/menu:bg-lightprimary group-hover/menu:text-primary">
-            <Image
+    <Dropdown
+      label={
+        <div className="flex items-center gap-2">
+          <div className="relative">
+            <img
               src="/images/profile/user-1.jpg"
-              alt="logo"
-              height="35"
-              width="35"
-              className="rounded-full"
+              alt="Profile"
+              className="w-10 h-10 rounded-full object-cover"
             />
-          </span>
-        )}
-      >
-        <div className="px-6">
-          <h3 className="text-lg font-semibold text-ld">User Profile</h3>
-          <div className="flex items-center gap-6 pb-5 border-b dark:border-darkborder mt-5 mb-3">
-            <Image
-              src="/images/profile/user-1.jpg"
-              alt="logo"
-              height="80"
-              width="80"
-              className="rounded-full"
-            />
-            <div>
-              <h5 className="card-title">Jonathan Deo</h5>
-              <span className="card-subtitle">Admin</span>
-              <p className="card-subtitle mb-0 mt-1 flex items-center">
-                <Icon
-                  icon="solar:mailbox-line-duotone"
-                  className="text-base me-1"
-                />
-                info@Materialm.com
-              </p>
-            </div>
+            <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></span>
+          </div>
+          <div className="hidden md:block">
+            <h5 className="text-sm font-medium text-gray-900 dark:text-white">Adam Carfagna</h5>
+            <p className="text-xs text-gray-500 dark:text-gray-400">Admin</p>
           </div>
         </div>
-        <SimpleBar>
-        {profileData.profileDD.map((items, index) => (
-          <Dropdown.Item
-            as={Link}
-            href={items.url}
-            className="px-6 py-3 flex justify-between items-center bg-hover group/link w-full"
-            key={index}
-          >
-            <div className="flex items-center w-full">
-              <div
-                className={`h-11 w-11 flex-shrink-0 rounded-md flex justify-center items-center ${items.bgcolor}`}
-              >
-                <Icon icon={items.icon} height={20} className={items.color} />
-              </div>
-              <div className="ps-4 flex justify-between w-full">
-                <div className="w-3/4 ">
-                  <h5 className="mb-1 text-sm  group-hover/link:text-primary">
-                    {items.title}
-                  </h5>
-                  <div className="text-xs  text-darklink">{items.subtitle}</div>
-                </div>
-              </div>
-            </div>
-          </Dropdown.Item>
-        ))}
-        </SimpleBar>
-
-        <div className="pt-6 px-6">
-          <Button
-            color={"primary"}
-            as={Link}
-            href="/auth/auth1/login"
-            className="w-full"
-          >
-            Logout
-          </Button>
+      }
+      arrowIcon={false}
+      inline
+      className="w-64"
+    >
+      <Dropdown.Header>
+        <span className="block text-sm">Adam Carfagna</span>
+        <span className="block truncate text-sm font-medium">admin@apogeelabs.com</span>
+      </Dropdown.Header>
+      <Dropdown.Item>
+        <div className="flex items-center gap-2">
+          <Icon icon="solar:user-id-line-duotone" className="w-5 h-5" />
+          <span>Profile</span>
         </div>
-      </Dropdown>
-    </div>
+      </Dropdown.Item>
+      <Dropdown.Item>
+        <div className="flex items-center gap-2">
+          <Icon icon="solar:settings-line-duotone" className="w-5 h-5" />
+          <span>Settings</span>
+        </div>
+      </Dropdown.Item>
+      <Dropdown.Divider />
+      <Dropdown.Item onClick={handleLogout}>
+        <div className="flex items-center gap-2 text-red-600">
+          <Icon icon="solar:logout-2-line-duotone" className="w-5 h-5" />
+          <span>Sign out</span>
+        </div>
+      </Dropdown.Item>
+    </Dropdown>
   );
 };
 

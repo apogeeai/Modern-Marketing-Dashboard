@@ -1,21 +1,15 @@
 "use client";
 import "flowbite";
 import React, { useState, useEffect, useContext } from "react";
-import { DarkThemeToggle, Navbar } from "flowbite-react";
-import Search from "./Search";
+import { Navbar } from "flowbite-react";
 import { Icon } from "@iconify/react";
-import AppLinks from "./AppLinks";
 import Messages from "./Messages";
 import Notifications from "./Notifications";
 import Profile from "./Profile";
 import { CustomizerContext } from "@/app/context/customizerContext";
-
-import { Language } from "./Language";
 import FullLogo from "../../shared/logo/FullLogo";
-import MobileHeaderItems from "./MobileHeaderItems";
 import { Drawer } from "flowbite-react";
 import MobileSidebar from "../sidebar/MobileSidebar";
-import HorizontalMenu from "../../horizontal/header/HorizontalMenu";
 
 interface HeaderPropsType {
   layoutType: string;
@@ -23,6 +17,8 @@ interface HeaderPropsType {
 
 const Header = ({ layoutType }: HeaderPropsType) => {
   const [isSticky, setIsSticky] = useState(false);
+  const [isMobileSidebar, setIsMobileSidebar] = useState(false);
+  const { isCollapse, setIsCollapse } = useContext(CustomizerContext);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -40,37 +36,20 @@ const Header = ({ layoutType }: HeaderPropsType) => {
     };
   }, []);
 
-  const { setIsCollapse, isCollapse, isLayout, setActiveMode, activeMode ,isMobileSidebar,setIsMobileSidebar} = useContext(CustomizerContext);
-
-  const [mobileMenu, setMobileMenu] = useState("");
-
-  const handleMobileMenu = () => {
-    if (mobileMenu === "active") {
-      setMobileMenu("");
-    } else {
-      setMobileMenu("active");
-    }
-  };
-
-  const toggleMode = () => {
-    setActiveMode((prevMode: string) => (prevMode === "light" ? "dark" : "light"));
-  };
-
-  // mobile-sidebar
-
-  const handleClose = () => setIsMobileSidebar(false);
   return (
     <>
       <header
-        className={`sticky top-0 z-[5] ${isSticky
-          ? "bg-lightgray dark:bg-dark shadow-md fixed w-full"
-          : "bg-transparent"
-          }`}
+        className={`sticky top-0 z-[5] ${
+          isSticky
+            ? "bg-lightgray dark:bg-dark shadow-md fixed w-full"
+            : "bg-transparent"
+        }`}
       >
         <Navbar
           fluid
-          className={`rounded-none bg-transparent dark:bg-transparent py-4 sm:px-30 px-4 ${layoutType == "horizontal" ? "container mx-auto" : ""
-            }  ${isLayout == "full" ? "!max-w-full" : ""}`}
+          className={`rounded-none bg-transparent dark:bg-transparent py-4 sm:px-30 px-4 ${
+            layoutType === "horizontal" ? "container mx-auto" : ""
+          }`}
         >
           {/* Mobile Toggle Icon */}
           <span
@@ -79,118 +58,48 @@ const Header = ({ layoutType }: HeaderPropsType) => {
           >
             <Icon icon="solar:hamburger-menu-line-duotone" height={21} />
           </span>
-          {/* Toggle Icon   */}
-          <Navbar.Collapse className="xl:block ">
-            <div className="flex gap-3 items-center relative">
-              {layoutType == "horizontal" ? (
-                <div className="me-3">
-                  <FullLogo />
-                </div>
-              ) : null}
-              {/* Toggle Menu    */}
-              {layoutType != "horizontal" ? (
-                <span
-                  onClick={() => {
-                    if (isCollapse === "full-sidebar") {
-                      setIsCollapse("mini-sidebar");
-                    } else {
-                      setIsCollapse("full-sidebar");
-                    }
-                  }}
-                  className="h-10 w-10 hover:text-primary hover:bg-lightprimary rounded-full flex justify-center items-center cursor-pointer"
-                >
-                  <Icon icon="solar:hamburger-menu-line-duotone" height={21} />
-                </span>
-              ) : null}
 
-              {/* App Link Dropwown   */}
-              <AppLinks  />
-
-              <Search />
-            </div>
-          </Navbar.Collapse>
+          {/* Toggle Menu */}
+          <span
+            onClick={() => {
+              if (isCollapse === "full-sidebar") {
+                setIsCollapse("mini-sidebar");
+              } else {
+                setIsCollapse("full-sidebar");
+              }
+            }}
+            className="h-10 w-10 hover:text-primary hover:bg-lightprimary rounded-full flex justify-center items-center cursor-pointer"
+          >
+            <Icon icon="solar:hamburger-menu-line-duotone" height={21} />
+          </span>
 
           {/* mobile-logo */}
           <div className="block xl:hidden">
             <FullLogo />
           </div>
 
-          <Navbar.Collapse className="xl:block hidden">
-            <div className="flex gap-3 items-center">
-              {/* Theme Toggle */}
-              {activeMode === "light" ? (
-                <div
-                  className="h-10 w-10 hover:text-primary hover:bg-lightprimary dark:hover:bg-darkminisidebar  dark:hover:text-primary focus:ring-0 rounded-full flex justify-center items-center cursor-pointer text-darklink  dark:text-white"
-
-                  onClick={toggleMode}
-                >
-                  <span className="flex items-center">
-                    <Icon
-                      icon="solar:moon-line-duotone"
-                      width="20"
-
-                    />
-                  </span>
-                </div>
-              ) : (
-                // Dark Mode Button
-                <div
-                  className="h-10 w-10 hover:text-primary hover:bg-lightprimary dark:hover:bg-darkminisidebar  dark:hover:text-primary focus:ring-0 rounded-full flex justify-center items-center cursor-pointer text-darklink  dark:text-white"
-
-                  onClick={toggleMode}
-                >
-                  <span className="flex items-center">
-
-                    <Icon
-                      icon="solar:sun-bold-duotone"
-                      width="20"
-
-                    />
-                  </span>
-                </div>
-              )}
-              {/* Language Dropdown*/}
-              <Language  />
-
+          <Navbar.Collapse>
+            <div className="flex items-center gap-3">
               {/* Messages Dropdown */}
-              <Messages  />
+              <Messages />
 
               {/* Notification Dropdown */}
               <Notifications />
 
               {/* Profile Dropdown */}
-              <Profile  />
+              <Profile />
             </div>
           </Navbar.Collapse>
-          {/* Mobile Toggle Icon */}
-          <span
-            className="h-10 w-10 flex xl:hidden hover:text-primary hover:bg-lightprimary rounded-full justify-center items-center cursor-pointer"
-            onClick={handleMobileMenu}
-          >
-            <Icon icon="tabler:dots" height={21} />
-          </span>
         </Navbar>
-        <div
-          className={`w-full  xl:hidden block mobile-header-menu ${mobileMenu}`}
-        >
-          <MobileHeaderItems />
-        </div>
-
-        {/* Horizontal Menu  */}
-        {layoutType == "horizontal" ? (
-          <div className="xl:border-y xl:border-ld">
-            <div className={`${isLayout == "full" ? "w-full px-6" : "container"}`}>
-              <HorizontalMenu />
-            </div>
-          </div>
-        ) : null}
       </header>
 
       {/* Mobile Sidebar */}
-      <Drawer open={isMobileSidebar} onClose={handleClose} className="w-130">
-        <Drawer.Items>
-          <MobileSidebar />
-        </Drawer.Items>
+      <Drawer
+        open={isMobileSidebar}
+        onClose={() => setIsMobileSidebar(false)}
+        className="p-0"
+      >
+        <MobileSidebar onClose={() => setIsMobileSidebar(false)} />
       </Drawer>
     </>
   );
