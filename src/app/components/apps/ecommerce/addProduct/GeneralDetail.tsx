@@ -3,21 +3,9 @@ import CardBox from "@/app/components/shared/CardBox";
 import { Label, TextInput } from "flowbite-react";
 import React, { useState } from "react";
 
-import dynamic from "next/dynamic";
-import "react-quill/dist/quill.snow.css";
-const ReactQuill: any = dynamic(
-  async () => {
-    const { default: RQ } = await import("react-quill");
-    // eslint-disable-next-line react/display-name
-    return ({ ...props }) => <RQ {...props} />;
-  },
-  {
-    ssr: false,
-  }
-);
-
 const GeneralDetail = () => {
-  const [text, setText] = useState("");
+  const [description, setDescription] = useState("");
+
   return (
     <>
       <CardBox>
@@ -42,11 +30,12 @@ const GeneralDetail = () => {
           <div className="mb-2 block">
             <Label htmlFor="desc" value="Description" />
           </div>
-          <ReactQuill
-            value={text}
-            onChange={(value: any) => {
-              setText(value);
-            }}
+          <textarea
+            className="w-full p-2 border rounded-md"
+            rows={4}
+            placeholder="Enter product description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
           />
           <small className="text-xs text-darklink">
             Set a description to the product for better visibility.
