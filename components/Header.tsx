@@ -17,6 +17,7 @@ export function Header() {
         <div className="flex-1 flex justify-end">
           <div className="flex items-center gap-4">
             <span className="text-sm text-muted-foreground">(Sample some buttons are FPO)</span>
+            <span className="text-sm text-muted-foreground">(Sample some buttons are FPO)</span>
             <Button
               variant="ghost"
               size="icon"
