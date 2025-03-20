@@ -1,0 +1,7 @@
+.page-wrapper {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  /* margin-left: calc(0px + 260px); */
+} 

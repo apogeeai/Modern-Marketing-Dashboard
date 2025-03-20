@@ -12,6 +12,21 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      animation: {
+        'gradient': 'gradient 3s ease infinite',
+      },
+      keyframes: {
+        gradient: {
+          '0%, 100%': {
+            'background-size': '200% 200%',
+            'background-position': 'left center'
+          },
+          '50%': {
+            'background-size': '200% 200%',
+            'background-position': 'right center'
+          },
+        },
+      },
       boxShadow: {
         md: "0px 1px 4px 0px rgba(133, 146, 173, 0.2)",
         lg: "0 1rem 3rem rgba(0, 0, 0, 0.175)",
