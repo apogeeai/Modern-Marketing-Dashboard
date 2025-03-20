@@ -9,7 +9,7 @@ const Welcome = () => {
   return (
     <CardBox className='bg-primary dark:bg-primary relative '>
         <div className='md:w-3/5'>
-           <h4 className='text-white text-xl'>Welcome Jonathan Deo</h4>
+           <h4 className='text-white text-xl'>Welcome Adam Carfagna</h4>
            <p className='text-sm text-white font-medium mt-1'>Check all the statastics</p> 
            <div className='flex align-center rounded-full justify-between bg-gray-800/10 w-fit mt-4'>
                 <div className='py-3 px-6 text-center'>

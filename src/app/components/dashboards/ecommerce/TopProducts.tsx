@@ -1,9 +1,12 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import CardBox from "../../shared/CardBox";
 import { Badge, Dropdown } from "flowbite-react";
-import { HiOutlineDotsVertical  } from "react-icons/hi";
+import { HiOutlineDotsVertical } from "react-icons/hi";
 import { Table } from "flowbite-react";
+import { PlaceholderModal } from "../../shared/PlaceholderModal";
+import { PlayCircle } from "lucide-react";
+import Image from "next/image";
 
 import product1 from "/public/images/svgs/icon-materialM.svg";
 import product2 from "/public/images/svgs/icon-matdash.svg";
@@ -19,17 +22,17 @@ import techicon5 from "/public/images/svgs/icon-bootstrap.svg";
 import techicon6 from "/public/images/svgs/icon-angular.svg";
 import techicon7 from "/public/images/svgs/icon-nextjs.svg";
 import techicon8 from "/public/images/svgs/icon-javascript.svg";
-import Image from "next/image";
 
 const TopProducts = () => {
-  const dropdownItems = ["Action", "Another action", "Something else"];
+  const [showModal, setShowModal] = useState(false);
+  const dropdownItems = ["Products"];
 
   const TableData = [
     {
       imgBg: "primary",
       img: product1,
-      leadname: "MaterialM - Admin",
-      subtext: "Dashboard Template",
+      leadname: "MaterialM",
+      subtext: "Products",
       statustext: "Mobile",
       statuscolor: "primary",
       sales: "2,350",
@@ -44,8 +47,8 @@ const TopProducts = () => {
     {
       imgBg: "secondary",
       img: product2,
-      leadname: "MatDash - Admin",
-      subtext: "Dashboard Template",
+      leadname: "MatDash",
+      subtext: "Products",
       statustext: "Web App",
       statuscolor: "success",
       sales: "1,630",
@@ -64,8 +67,8 @@ const TopProducts = () => {
     {
       imgBg: "success",
       img: product3,
-      leadname: "Spike - Admin",
-      subtext: "Dashboard Template",
+      leadname: "Spike",
+      subtext: "Products",
       statustext: "Website",
       statuscolor: "secondary",
       sales: "480",
@@ -84,8 +87,8 @@ const TopProducts = () => {
     {
       imgBg: "warning",
       img: product4,
-      leadname: "Modernize - Admin",
-      subtext: "Dashboard Template",
+      leadname: "Modernize",
+      subtext: "Products",
       statustext: "Marketing",
       statuscolor: "success",
       sales: "874",
@@ -100,8 +103,8 @@ const TopProducts = () => {
     {
       imgBg: "error",
       img: product5,
-      leadname: "MaterialPro - Admin",
-      subtext: "Dashboard Template",
+      leadname: "MaterialPro",
+      subtext: "Products",
       statustext: "SSM",
       statuscolor: "warning",
       sales: "3715",
@@ -123,26 +126,37 @@ const TopProducts = () => {
     <>
       <CardBox>
         <div className="flex items-center justify-between">
-          <h5 className="card-title">Top Performing Products</h5>
-          <div>
+          <h5 className="card-title">ApogeeLabs</h5>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setShowModal(true)}
+              className="flex items-center gap-1 text-sm text-blue-500 hover:text-blue-600"
+            >
+              <PlayCircle className="h-4 w-4" />
+              Learn how to manage
+            </button>
             <Dropdown
               label=""
               dismissOnClick={false}
               renderTrigger={() => (
-                <span className="h-9 w-9 flex justify-center items-center rounded-full hover:bg-lightprimary hover:text-primary cursor-pointer">
+                <span 
+                  className="h-9 w-9 flex justify-center items-center rounded-full hover:bg-lightprimary hover:text-primary cursor-pointer" 
+                  title="Products"
+                  onClick={() => setShowModal(true)}
+                >
                   <HiOutlineDotsVertical size={22} />
                 </span>
               )}
             >
               {dropdownItems.map((items, index) => {
-                return <Dropdown.Item key={index}>{items}</Dropdown.Item>;
+                return <Dropdown.Item key={index} onClick={() => setShowModal(true)}>{items}</Dropdown.Item>;
               })}
             </Dropdown>
           </div>
         </div>
 
         <div className="overflow-x-auto">
-          <Table >
+          <Table>
             <Table.Head>
               <Table.HeadCell className="ps-0">Product name</Table.HeadCell>
               <Table.HeadCell>Category</Table.HeadCell>
@@ -190,6 +204,11 @@ const TopProducts = () => {
           </Table>
         </div>
       </CardBox>
+
+      <PlaceholderModal 
+        show={showModal} 
+        onClose={() => setShowModal(false)} 
+      />
     </>
   );
 };

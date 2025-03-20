@@ -259,3 +259,47 @@
     @apply h-[18px] w-[18px] border border-bordergray dark:border-darkborder bg-white dark:bg-transparent data-[checked]:bg-primary dark:data-[checked]:bg-primary rounded cursor-pointer focus:ring-0 focus:ring-offset-0 outline-none
   }
 }
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient {
+  background-size: 200% auto;
+  animation: gradient 3s linear infinite;
+}
+
+/* Remove sidebar margins */
+.page-wrapper {
+  margin-left: 0 !important;
+  width: 100% !important;
+}
+
+@media (min-width: 768px) {
+  .page-wrapper {
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .page-wrapper {
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
+}
+
+@media (min-width: 1280px) {
+  .page-wrapper {
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
+}

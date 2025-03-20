@@ -2,17 +2,17 @@ const config = {
     activeDir: "ltr", // This can be ltr or rtl
     activeMode: "dark", // This can be light or dark
     activeTheme: "BLUE_THEME", // BLUE_THEME, GREEN_THEME, AQUA_THEME, PURPLE_THEME, ORANGE_THEME
-    activeLayout: "vertical", // This can be vertical or horizontal
-    isLayout: "boxed", // This can be full or boxed
+    activeLayout: "full",
+    isLayout: "full",
     isSidebarHover: false,
-    isCollapse:"full-sidebar",
+    isCollapse: "full",
     isLanguage: "en",
     isCardShadow: true,
     isMobileSidebar: false,
     isHorizontal: false,
     isBorderRadius: 8,
-    sidebarWidth: 320,
-    miniSidebarWidth: 87,
+    sidebarWidth: 0,
+    miniSidebarWidth: 0,
     topbarHeight: 70,
   };
   
