@@ -6,7 +6,7 @@ channel = "stable-24_05"
 
 [deployment]
 run = ["sh", "-c", "next start -p 3000 -H 0.0.0.0"]
-build = ["sh", "-c", "npm install --legacy-peer-deps && npm run build"]
+build = ["sh", "-c", "npm install --legacy-peer-deps && NEXT_TELEMETRY_DISABLED=1 npm run build"]
 deploymentTarget = "cloudrun"
 
 [[ports]]
