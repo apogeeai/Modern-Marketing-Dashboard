@@ -5,8 +5,8 @@ run = "npm run dev"
 channel = "stable-24_05"
 
 [deployment]
-run = ["sh", "-c", "next start -p 3006 -H 0.0.0.0"]
-build = ["sh", "-c", "npm run build"]
+run = ["sh", "-c", "next start -p 3000 -H 0.0.0.0"]
+build = ["sh", "-c", "npm install --legacy-peer-deps && npm run build"]
 deploymentTarget = "cloudrun"
 
 [[ports]]
