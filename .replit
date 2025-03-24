@@ -22,7 +22,7 @@ localPort = 3006
 externalPort = 3000
 
 [workflows]
-runButton = "Run"
+runButton = "Dev Server"
 
 [[workflows.workflow]]
 name = "Run"
@@ -32,3 +32,12 @@ mode = "sequential"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "next dev -p 3006 -H 0.0.0.0"
+
+[[workflows.workflow]]
+name = "Dev Server"
+author = 36003217
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "next dev -p 3000 -H 0.0.0.0"
