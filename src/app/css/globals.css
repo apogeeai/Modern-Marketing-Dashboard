@@ -1,9 +1,3 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-
-
 @import './layouts/container.css';
 @import './layouts/sidebar.css';
 @import './layouts/horizontal.css';
@@ -18,6 +12,10 @@
 @import './theme/dark.css';
 @import './override/reboot.css';
 @import './layouts/rtl.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @layer components {
   .container {
@@ -48,7 +46,6 @@
     @apply text-darklink;
   }
 
-  /*heading text color*/
   h1,
   h2,
   h3,
@@ -118,7 +115,6 @@
     @apply rounded-full
   }
 
-
   .input-center input {
     @apply text-center;
   }
@@ -159,7 +155,6 @@
     @apply hover:text-primary dark:hover:text-primary;
   }
 
-  /* Apps */
   .left-part {
     @apply w-80 border-e border-ld p-6;
   }
@@ -200,7 +195,6 @@
     @apply hover:text-primary
   }
 
-  /* Button Hover Color Set */
   button.bg-primary {
     @apply hover:bg-primaryemphasis
   }
@@ -226,7 +220,6 @@
   }
 
 
-  /* Headlessui */
   .ui-button {
     @apply flex items-stretch justify-between text-center py-2.5 px-5 text-white text-center font-medium rounded-full
   }
@@ -277,7 +270,6 @@
   animation: gradient 3s linear infinite;
 }
 
-/* Remove sidebar margins */
 .page-wrapper {
   margin-left: 0 !important;
   width: 100% !important;
