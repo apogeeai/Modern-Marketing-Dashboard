@@ -1,7 +1,8 @@
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    reactStrictMode: false
+    reactStrictMode: false,
+    allowedDevOrigins: ['*.replit.dev', '*.worf.replit.dev'],
 };
 
 export default nextConfig;
