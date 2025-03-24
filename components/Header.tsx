@@ -1,7 +1,7 @@
 
 "use client";
 import React from "react";
-import { FullLogo } from "./FullLogo";
+import { FullLogo } from "@/app/components/shared/FullLogo";
 import { HiBeaker } from "react-icons/hi";
 
 export function Header() {
