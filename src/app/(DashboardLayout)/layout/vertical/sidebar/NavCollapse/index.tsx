@@ -2,7 +2,7 @@
 
 import { Sidebar } from "flowbite-react";
 import React from "react";
-import { ChildItem } from "../SidebarItems.ts";
+import { ChildItem } from "../Sidebaritems";
 import NavItems from "../NavItems";
 import { Icon } from "@iconify/react";
 import { HiOutlineChevronDown } from "react-icons/hi";
