@@ -1,34 +1,35 @@
 
-
-import { Sidebar } from "flowbite-react";
-import React from "react";
-import { ChildItem } from "../Sidebaritems";
-import NavItems from "../NavItems";
+import React from 'react';
+import { usePathname } from 'next/navigation';
 import { Icon } from "@iconify/react";
+import { Sidebar } from "flowbite-react";
 import { HiOutlineChevronDown } from "react-icons/hi";
 import { twMerge } from "tailwind-merge";
-import { usePathname } from "next/navigation";
-import { useTranslation } from "react-i18next";
+import NavItems from "../NavItems";
 
 interface NavCollapseProps {
-  item: ChildItem;
+  item: {
+    id: string;
+    name: string;
+    icon: string;
+    children?: any[];
+    url?: string;
+  };
 }
 
-const NavCollapse: React.FC<NavCollapseProps> = ({ item }: any) => {
+const NavCollapse: React.FC<NavCollapseProps> = ({ item }) => {
   const pathname = usePathname();
-  const activeDD = item.children.find((t: { url: string; }) => t.url === pathname)
-  const { t } = useTranslation();
+  const activeDD = item.children?.find((t) => t.url === pathname);
+
   return (
     <>
       <Sidebar.Collapse
-        label={t(`${item.name}`)} 
+        label={item.name}
         open={activeDD ? true : false}
         icon={() => <Icon icon={item.icon} height={18} />}
         className={`${activeDD ? '!text-primary bg-lightprimary ' : ''} collapse-menu`}
         renderChevronIcon={(theme, open) => {
-          const IconComponent = open
-            ? HiOutlineChevronDown
-            : HiOutlineChevronDown;
+          const IconComponent = HiOutlineChevronDown;
           return (
             <IconComponent
               aria-hidden
@@ -37,14 +38,12 @@ const NavCollapse: React.FC<NavCollapseProps> = ({ item }: any) => {
           );
         }}
       >
-        {/* Render child items */}
         {item.children && (
           <Sidebar.ItemGroup className="sidebar-dropdown">
-            {item.children.map((child: any) => (
+            {item.children.map((child) => (
               <React.Fragment key={child.id}>
-                {/* Render NavItems for child items */}
                 {child.children ? (
-                  <NavCollapse item={child}  /> // Recursive call for nested collapse
+                  <NavCollapse item={child} />
                 ) : (
                   <NavItems item={child} />
                 )}
