@@ -1,12 +1,3 @@
-export interface ChildItem {
-  id: string;
-  url: string;
-  icon?: string;
-  name: string;
-  color?: string;
-  children?: ChildItem[];
-}
-
 import { Icon } from "@iconify/react";
 
 interface MenuItem {
